@@ -25,6 +25,17 @@ export class AccountService {
     );
   }
 
+  register(model: any){
+    return this.http.post<IUser>(this.baseUrl + 'account/register', model).pipe(
+      map(user => {
+        if(user){
+          localStorage.setItem(AccountService.USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    );
+  }
+
   setCurrentUser(user: IUser){
     this.currentUserSource.next(user);
   }
