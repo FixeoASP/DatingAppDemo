@@ -6,12 +6,20 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 
+// Path constants
+export const APP_ROUTES = {
+  ROUTE_MEMBERS: 'members',
+  ROUTE_MEMBER_DETAIL: 'members/:id',
+  ROUTE_LISTS: 'lists',
+  ROUTE_MESSAGES: 'messages'
+};
+
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'members', component: MemberListComponent},
-  {path: 'members/:id', component: MemberDetailComponent},
-  {path: 'lists', component: ListsComponent},
-  {path: 'messages', component: MessagesComponent},
+  {path: APP_ROUTES.ROUTE_MEMBERS, component: MemberListComponent},
+  {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent},
+  {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
+  {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent},
   {path: '**', component: HomeComponent, pathMatch: 'full'}
 ];
 

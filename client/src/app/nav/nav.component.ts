@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { Observable, of } from 'rxjs';
 import { IUser } from '../_models/user';
+import { APP_ROUTES } from '../app-routing.module';
 
 @Component({
   selector: 'app-nav',
@@ -10,6 +11,7 @@ import { IUser } from '../_models/user';
 })
 export class NavComponent implements OnInit{
   model: any = {};
+  APP_ROUTES = APP_ROUTES;
 
   constructor(public accountService: AccountService) {}
   ngOnInit(): void {
