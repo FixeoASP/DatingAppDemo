@@ -3,6 +3,7 @@ import { AccountService } from '../_services/account.service';
 import { Observable, of } from 'rxjs';
 import { IUser } from '../_models/user';
 import { APP_ROUTES } from '../app-routing.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -13,20 +14,20 @@ export class NavComponent implements OnInit{
   model: any = {};
   APP_ROUTES = APP_ROUTES;
 
-  constructor(public accountService: AccountService) {}
+  constructor(public accountService: AccountService, private router: Router) {}
+
   ngOnInit(): void {
   }
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: response => {
-        console.log(response);
-      },
+      next: _ => this.router.navigateByUrl(`/${APP_ROUTES.ROUTE_MEMBERS}`),
       error: error => console.log(error)
     })
   }
 
   logout(){
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 }
