@@ -17,10 +17,17 @@ export const APP_ROUTES = {
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: APP_ROUTES.ROUTE_MEMBERS, component: MemberListComponent, canActivate: [authGuard]},
-  {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent},
-  {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
-  {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent},
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
+    children:[
+      {path: APP_ROUTES.ROUTE_MEMBERS, component: MemberListComponent},
+      {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent},
+      {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
+      {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent}
+    ]
+  },
   {path: '**', component: HomeComponent, pathMatch: 'full'}
 ];
 
