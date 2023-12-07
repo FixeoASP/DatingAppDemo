@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { IUser } from '../_models/user';
 import { APP_ROUTES } from '../app-routing.module';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +15,8 @@ export class NavComponent implements OnInit{
   model: any = {};
   APP_ROUTES = APP_ROUTES;
 
-  constructor(public accountService: AccountService, private router: Router) {}
+  constructor(public accountService: AccountService, private router: Router,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
   }
@@ -22,7 +24,7 @@ export class NavComponent implements OnInit{
   login() {
     this.accountService.login(this.model).subscribe({
       next: _ => this.router.navigateByUrl(`/${APP_ROUTES.ROUTE_MEMBERS}`),
-      error: error => console.log(error)
+      error: error => this.toastr.error(error.error)
     })
   }
 
