@@ -6,6 +6,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
+import { TestErrorComponent } from './errors/test-error/test-error.component';
 
 // Path constants
 export const APP_ROUTES = {
@@ -28,6 +29,7 @@ const routes: Routes = [
       {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent}
     ]
   },
+  {path: 'errors', component: TestErrorComponent},
   {path: '**', component: HomeComponent, pathMatch: 'full'}
 ];
 
