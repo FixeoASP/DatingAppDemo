@@ -13,7 +13,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 // Path constants
 export const APP_ROUTES = {
   ROUTE_MEMBERS: 'members',
-  ROUTE_MEMBER_DETAIL: 'members/:id',
+  ROUTE_MEMBER_DETAIL: 'members/:username',
+  ROUTE_MEMBER_DETAIL_PARAM_USERNAME: 'username',
   ROUTE_LISTS: 'lists',
   ROUTE_MESSAGES: 'messages'
 };
