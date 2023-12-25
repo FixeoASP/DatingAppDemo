@@ -9,11 +9,13 @@ import { authGuard } from './_guards/auth.guard';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 // Path constants
 export const APP_ROUTES = {
   ROUTE_MEMBERS: 'members',
   ROUTE_MEMBER_DETAIL: 'members/:username',
+  ROUTE_MEMBER_EDIT: 'member/edit',
   ROUTE_MEMBER_DETAIL_PARAM_USERNAME: 'username',
   ROUTE_LISTS: 'lists',
   ROUTE_MESSAGES: 'messages'
@@ -28,6 +30,7 @@ const routes: Routes = [
     children:[
       {path: APP_ROUTES.ROUTE_MEMBERS, component: MemberListComponent},
       {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent},
+      {path: APP_ROUTES.ROUTE_MEMBER_EDIT, component: MemberEditComponent},
       {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
       {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent}
     ]
