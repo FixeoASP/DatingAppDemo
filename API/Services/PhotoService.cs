@@ -22,21 +22,24 @@ public class PhotoService : IPhotoService
 
     public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
     {
-        if (file.Length <= 0) return null;
-
-        using var stream = file.OpenReadStream();
-        var uploadParams = new ImageUploadParams
+        var uploadResult = new ImageUploadResult();
+        if (file.Length > 0)
         {
-            File = new FileDescription(file.FileName, stream),
-            Transformation = new Transformation()
-                .Height(500)
-                .Width(500)
-                .Crop("fill")
-                .Gravity("face"),
-            Folder = "da-net7"
-        };
+            using var stream = file.OpenReadStream();
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(file.FileName, stream),
+                Transformation = new Transformation()
+                    .Height(500)
+                    .Width(500)
+                    .Crop("fill")
+                    .Gravity("face"),
+                Folder = "da-net7"
+            };
 
-        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            uploadResult = await _cloudinary.UploadAsync(uploadParams);
+        }
+
         return uploadResult;
     }
 
