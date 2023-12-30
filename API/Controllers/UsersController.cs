@@ -25,6 +25,12 @@ public class UsersController : BaseApiController
         _photoService = photoService;
     }
 
+    private async Task<AppUser> GetCurrentUser()
+    {
+        return await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+    }
+
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
@@ -42,7 +48,7 @@ public class UsersController : BaseApiController
     [HttpPut]
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
     {
-        var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+        var user = await GetCurrentUser();
 
         if (user == null) return NotFound();
 
@@ -56,7 +62,7 @@ public class UsersController : BaseApiController
     [HttpPost("add-photo")]
     public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
     {
-        var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+        var user = await GetCurrentUser();
 
         if (user == null) return NotFound();
 
@@ -86,5 +92,27 @@ public class UsersController : BaseApiController
         }
 
         return BadRequest("Problem adding photo");
+    }
+
+    [HttpPut("set-main-photo/{photoId}")]
+    public async Task<ActionResult> SetMainPhoto(int photoId)
+    {
+        var user = await GetCurrentUser();
+
+        if (user == null) return NotFound();
+
+        var selectedPhoto = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+        if (selectedPhoto == null) return NotFound();
+
+        if (selectedPhoto.IsMain) return BadRequest("This is already your main photo");
+
+        var currentMainPhoto = user.Photos.FirstOrDefault(x => x.IsMain);
+        if (currentMainPhoto != null) currentMainPhoto.IsMain = false;
+        selectedPhoto.IsMain = true;
+
+        if (await _userRepository.SaveAllAsync()) return NoContent();
+
+        return BadRequest("Problem setting the main photo");
     }
 }
