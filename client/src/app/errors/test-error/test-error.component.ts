@@ -16,7 +16,10 @@ export class TestErrorComponent {
   get404Error(){
     this.http.get(this.baseUrl + 'buggy/not-found').subscribe({
       next: response => console.log(response),
-      error: error => console.log(error)
+      error: error => {
+        console.log('baseUrl = ' + this.baseUrl);
+        //console.log(error);
+      }
     });
   }
 
