@@ -11,6 +11,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { RngComponent } from './errors/rng/rng.component';
 
 // Path constants
 export const APP_ROUTES = {
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'errors', component: TestErrorComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
+  {path: 'rng', component: RngComponent},
   {path: '**', component: NotFoundComponent, pathMatch: 'full'}
 ];
 
