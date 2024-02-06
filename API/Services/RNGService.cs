@@ -34,7 +34,7 @@ public class RNGService : IRNGService
         return nrListStr;
     }
 
-    // TODO get seed from another service
+    // TODO Get seed from another service
     private int GetSeed(int factor)
     {
         var now = DateTime.Now;
