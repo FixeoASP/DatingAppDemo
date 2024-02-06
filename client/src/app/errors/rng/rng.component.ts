@@ -14,7 +14,11 @@ export class RngComponent {
   constructor(private numbersService: NumbersService){}
 
   ngOnInit(): void {
-    console.log('OnInit got called');
+    this.getLottoResult();
+  }
+
+  getLottoResult(): void{
+    console.log('Execute getLottoResult from rng component');
     this.numbersService.getLottoResult().subscribe(
       {
         next: response => this.jackpotResult = response,

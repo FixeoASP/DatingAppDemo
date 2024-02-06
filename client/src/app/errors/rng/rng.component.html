@@ -1,4 +1,7 @@
 <p>rng works!</p>
+<button class="btn btn-outline-primary me-3" (click)="getLottoResult()">
+  Get New Result
+</button>
 <div *ngIf="this.jackpotResult">
   <h1>Euro Jacpot</h1>
   <p>{{ this.jackpotResult.euroJackpotNumbers1 }}</p>
