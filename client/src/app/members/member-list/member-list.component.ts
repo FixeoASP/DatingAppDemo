@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { Observable } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { PaginatedResult } from 'src/app/_models/paginatedResult';
@@ -33,5 +34,12 @@ export class MemberListComponent {
         }
       }
     })
+  }
+
+  pageChanged(event: PageChangedEvent){
+    if(this.pageNumber  !== event.page){
+      this.pageNumber = event.page;
+      this.loadMember();
+    }
   }
 }
