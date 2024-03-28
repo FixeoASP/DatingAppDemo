@@ -33,9 +33,14 @@ public class UserRepository : IUserRepository
 
         userQuery = userQuery.Where(u => u.UserName != userParams.CurrentUserName);
         userQuery = userQuery.Where(u => u.Gender == userParams.Gender);
+
+        var minDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
+        var maxDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
+        userQuery = userQuery.Where(u => u.DateOfBirth >= minDoB && u.DateOfBirth <= maxDoB);
+
+
         var query = userQuery.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                     .AsNoTracking();
-
         return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
     }
 
