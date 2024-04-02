@@ -37,7 +37,11 @@ public class UserRepository : IUserRepository
         var minDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
         var maxDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
         userQuery = userQuery.Where(u => u.DateOfBirth >= minDoB && u.DateOfBirth <= maxDoB);
-
+        userQuery = userParams.OrderBy switch
+        {
+            "created" => userQuery.OrderByDescending(u => u.Created),
+            _ => userQuery.OrderByDescending(u => u.LastActive)
+        };
 
         var query = userQuery.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                     .AsNoTracking();
