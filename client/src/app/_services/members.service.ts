@@ -7,6 +7,7 @@ import { PaginatedResult } from '../_models/paginatedResult';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { User } from '../_models/user';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class MembersService {
   userParams: UserParams | undefined;
 
   constructor(private http: HttpClient, private accountService: AccountService) { 
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
+    this.accountService.currentUser$.pipe(takeUntilDestroyed()).subscribe({
       next: user => {
         if(user){
           this.userParams = new UserParams(user);
@@ -97,7 +98,7 @@ export class MembersService {
   }
 
   getLikes(predicate: string){
-    return this.http.get(this.baseUrl + 'likes?predicate=' + predicate);
+    return this.http.get<Member[]>(this.baseUrl + 'likes?predicate=' + predicate);
   }
 
   private getPaginatedResult<T>(url:string, params: HttpParams) {
