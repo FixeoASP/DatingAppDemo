@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ public class LikesController : BaseApiController
     [HttpPost("{username}")]
     public async Task<ActionResult> AddLike(string username)
     {
-        var sourceUserId = int.Parse(User.GetUserId());
+        var sourceUserId = User.GetUserId();
         var likedUser = await _userRepository.GetUserByUsernameAsync(username);
         var sourceUser = await _likesRepository.GetUserWithLikesAsync(sourceUserId);
 
@@ -46,9 +47,11 @@ public class LikesController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes(string predicate)
+    public async Task<ActionResult<PagedList<LikeDto>>> GetUserLikes([FromQuery] LikesParams likesParams)
     {
-        var users = await _likesRepository.GetUserLikesAsync(predicate, int.Parse(User.GetUserId()));
-        return Ok(users);
+        likesParams.UserId = User.GetUserId();
+        var usersPages = await _likesRepository.GetUserLikesAsync(likesParams);
+        Response.AddPaginationHeader(new PaginationHeader(usersPages.CurrentPage, usersPages.PageSize, usersPages.TotalCount, usersPages.TotalPages));
+        return Ok(usersPages);
     }
 }
