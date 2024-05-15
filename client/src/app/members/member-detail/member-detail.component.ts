@@ -5,6 +5,7 @@ import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimeagoModule } from 'ngx-timeago';
 import { Member } from 'src/app/_models/member';
+import { SharedModule } from 'src/app/_modules/shared.module';
 import { MembersService } from 'src/app/_services/members.service';
 import { APP_ROUTES } from 'src/app/app-routing.module';
 
@@ -13,7 +14,7 @@ import { APP_ROUTES } from 'src/app/app-routing.module';
   standalone: true,
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.css'],
-  imports: [CommonModule, TabsModule, GalleryModule, TimeagoModule]
+  imports: [CommonModule, SharedModule]
 })
 export class MemberDetailComponent {
   member: Member | undefined;

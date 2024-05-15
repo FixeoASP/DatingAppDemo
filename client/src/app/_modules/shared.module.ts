@@ -9,9 +9,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
+import { GalleryModule } from 'ng-gallery';
+import { MemberMessagesComponent } from '../members/member-messages/member-messages.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [MemberMessagesComponent],
   imports: [
     CommonModule,
     BsDropdownModule.forRoot(),
@@ -26,7 +28,8 @@ import { TimeagoModule } from 'ngx-timeago';
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
+    GalleryModule
   ],
   exports: [
     BsDropdownModule,
@@ -37,7 +40,9 @@ import { TimeagoModule } from 'ngx-timeago';
     BsDatepickerModule,
     PaginationModule,
     ButtonsModule,
-    TimeagoModule
+    TimeagoModule,
+    GalleryModule,
+    MemberMessagesComponent
   ]
 })
 export class SharedModule { }
