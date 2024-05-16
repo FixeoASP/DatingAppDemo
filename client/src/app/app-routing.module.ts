@@ -12,6 +12,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { RngComponent } from './errors/rng/rng.component';
+import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 // Path constants
 export const APP_ROUTES = {
@@ -31,7 +32,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     children:[
       {path: APP_ROUTES.ROUTE_MEMBERS, component: MemberListComponent},
-      {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent},
+      {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},
       {path: APP_ROUTES.ROUTE_MEMBER_EDIT, component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
       {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
       {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent}
