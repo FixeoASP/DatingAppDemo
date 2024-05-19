@@ -11,6 +11,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
 import { GalleryModule } from 'ng-gallery';
 import { MemberMessagesComponent } from '../members/member-messages/member-messages.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [MemberMessagesComponent],
@@ -29,7 +30,8 @@ import { MemberMessagesComponent } from '../members/member-messages/member-messa
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
-    GalleryModule
+    GalleryModule,
+    FormsModule
   ],
   exports: [
     BsDropdownModule,
@@ -42,7 +44,8 @@ import { MemberMessagesComponent } from '../members/member-messages/member-messa
     ButtonsModule,
     TimeagoModule,
     GalleryModule,
-    MemberMessagesComponent
+    MemberMessagesComponent,
+    FormsModule
   ]
 })
 export class SharedModule { }
