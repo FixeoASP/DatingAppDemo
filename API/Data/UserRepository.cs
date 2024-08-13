@@ -4,6 +4,7 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -11,11 +12,13 @@ namespace API.Data;
 public class UserRepository : IUserRepository
 {
     private readonly DataContext _context;
+    private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
 
-    public UserRepository(DataContext context, IMapper mapper)
+    public UserRepository(DataContext context, UserManager<AppUser> userManager, IMapper mapper)
     {
         _context = context;
+        _userManager = userManager;
         _mapper = mapper;
     }
 
@@ -55,7 +58,7 @@ public class UserRepository : IUserRepository
 
     public async Task<AppUser> GetUserByUsernameAsync(string username)
     {
-        return await _context.Users
+        return await _userManager.Users
             .Include(x => x.Photos)
             .SingleOrDefaultAsync(x => x.UserName == username);
     }
