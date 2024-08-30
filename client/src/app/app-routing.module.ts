@@ -13,6 +13,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { RngComponent } from './errors/rng/rng.component';
 import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 // Path constants
 export const APP_ROUTES = {
@@ -21,7 +22,8 @@ export const APP_ROUTES = {
   ROUTE_MEMBER_EDIT: 'member/edit',
   ROUTE_MEMBER_DETAIL_PARAM_USERNAME: 'username',
   ROUTE_LISTS: 'lists',
-  ROUTE_MESSAGES: 'messages'
+  ROUTE_MESSAGES: 'messages',
+  ROUTE_ADMIN: 'admin'
 };
 
 const routes: Routes = [
@@ -35,7 +37,8 @@ const routes: Routes = [
       {path: APP_ROUTES.ROUTE_MEMBER_DETAIL, component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},
       {path: APP_ROUTES.ROUTE_MEMBER_EDIT, component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
       {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
-      {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent}
+      {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent},
+      {path: APP_ROUTES.ROUTE_ADMIN, component: AdminPanelComponent}
     ]
   },
   {path: 'errors', component: TestErrorComponent},

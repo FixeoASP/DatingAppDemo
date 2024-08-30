@@ -27,6 +27,7 @@ import { RngComponent } from './errors/rng/rng.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     RngComponent,
     TextInputComponent,
     DatePickerComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
