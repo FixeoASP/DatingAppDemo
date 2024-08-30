@@ -38,6 +38,9 @@ export class AccountService {
   }
 
   setCurrentUser(user: User){
+    user.roles = [];
+    const roles = this.getDecodedToke(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem(AccountService.USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -45,5 +48,9 @@ export class AccountService {
   logout(){
     localStorage.removeItem(AccountService.USER_LOCAL_STORAGE_KEY);
     this.currentUserSource.next(null);
+  }
+
+  getDecodedToke(token: string){
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }

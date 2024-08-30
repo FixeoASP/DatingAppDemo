@@ -14,6 +14,7 @@ import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { RngComponent } from './errors/rng/rng.component';
 import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { adminGuard } from './_guard/admin.guard';
 
 // Path constants
 export const APP_ROUTES = {
@@ -38,7 +39,7 @@ const routes: Routes = [
       {path: APP_ROUTES.ROUTE_MEMBER_EDIT, component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
       {path: APP_ROUTES.ROUTE_LISTS, component: ListsComponent},
       {path: APP_ROUTES.ROUTE_MESSAGES, component: MessagesComponent},
-      {path: APP_ROUTES.ROUTE_ADMIN, component: AdminPanelComponent}
+      {path: APP_ROUTES.ROUTE_ADMIN, component: AdminPanelComponent, canActivate: [adminGuard]}
     ]
   },
   {path: 'errors', component: TestErrorComponent},
