@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -91,8 +92,6 @@ public class MessageRepository : IMessageRepository
     public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
     {
         var messages = await _context.Messages
-            .Include(u => u.Sender).ThenInclude(p => p.Photos)
-            .Include(u => u.Recipient).ThenInclude(p => p.Photos)
             .Where(
                 m => (m.RecipientUsername == currentUsername
                 && m.SenderUsername == recipientUsername
@@ -102,22 +101,13 @@ public class MessageRepository : IMessageRepository
                 && m.SenderUsername == currentUsername
                 && m.SenderDeleted == false)
             )
+            .MarkUnreadAsRead(currentUsername)
             .OrderBy(m => m.MessageSent)
+            .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
-        var unreadMessages = messages.Where(
-            m => m.DateRead == null && m.RecipientUsername == currentUsername
-        ).ToList();
 
-        if (unreadMessages.Any())
-        {
-            foreach (var message in unreadMessages)
-            {
-                message.DateRead = DateTime.UtcNow;
-            }
-        }
-
-        return _mapper.Map<IEnumerable<MessageDto>>(messages);
+        return messages;
     }
 
     public void RemoveConnection(Connection connection)

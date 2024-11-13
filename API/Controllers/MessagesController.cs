@@ -100,4 +100,12 @@ public class MessagesController : BaseApiController
         return BadRequest("Problem with deleting message");
     }
 
+    [HttpGet("thread/{username}")]
+    public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread(string username)
+    {
+        var currentUsername = User.GetUsername();
+
+        return Ok(await _uow.MessageRepository.GetMessageThread(currentUsername, username));
+    }
+
 }
