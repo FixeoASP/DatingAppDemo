@@ -15,10 +15,10 @@ public class UserRepository : IUserRepository
     private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
 
-    public UserRepository(DataContext context, UserManager<AppUser> userManager, IMapper mapper)
+    public UserRepository(DataContext context, IMapper mapper)
     {
         _context = context;
-        _userManager = userManager;
+        // _userManager = userManager;
         _mapper = mapper;
     }
 
@@ -58,7 +58,10 @@ public class UserRepository : IUserRepository
 
     public async Task<AppUser> GetUserByUsernameAsync(string username)
     {
-        return await _userManager.Users
+        // return await _userManager.Users
+        //     .Include(x => x.Photos)
+        //     .SingleOrDefaultAsync(x => x.UserName == username);
+        return await _context.Users
             .Include(x => x.Photos)
             .SingleOrDefaultAsync(x => x.UserName == username);
     }
@@ -68,11 +71,6 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .Include(x => x.Photos)
             .ToListAsync();
-    }
-
-    public async Task<bool> SaveAllAsync()
-    {
-        return await _context.SaveChangesAsync() > 0;
     }
 
     public void Update(AppUser user)
