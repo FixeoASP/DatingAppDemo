@@ -1,1 +1,8 @@
-<p>photo-management works!</p>
+<div class="row">
+  <div class="col-2" *ngFor="let photo of photos">
+    <app-photo-management-card
+      [photo]="photo"
+      (rejectApprovePhotoEvent)="rejectApprovePhoto($event)"
+    ></app-photo-management-card>
+  </div>
+</div>
