@@ -57,8 +57,14 @@ public class UsersController : BaseApiController
     [HttpGet("{username}")] // api/users/lisa
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
-        return await _uow.UserRepository.GetMemberAsync(username);
+        return await _uow.UserRepository.GetMemberAsync(username, User.GetUsername());
     }
+
+    // [HttpPost("add-photo1")] // api/users/lisa
+    // public async Task<ActionResult> GetRandomAnswer()
+    // {
+    //     return Ok("its ok again");
+    // }
 
     [HttpPut]
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
@@ -90,11 +96,6 @@ public class UsersController : BaseApiController
             Url = result.SecureUrl.AbsoluteUri,
             PublicId = result.PublicId
         };
-
-        if (user.Photos.Count == 0)
-        {
-            photo.IsMain = true;
-        }
 
         user.Photos.Add(photo);
 
@@ -138,7 +139,7 @@ public class UsersController : BaseApiController
 
         if (user == null) return NotFound();
 
-        var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+        var photo = await _uow.PhotoRepository.GetPhotoById(photoId);
 
         if (photo == null) return NotFound();
 
