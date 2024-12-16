@@ -1,4 +1,5 @@
 ﻿using API.Entities;
+using API.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,13 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int,
             .HasForeignKey(ur => ur.UserId)
             .IsRequired();
 
+        builder.Entity<AppUser>(builder =>
+        {
+            // Date is a DateOnly property and date on database
+            builder.Property(x => x.DateOfBirth)
+                .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+        });
+
         builder.Entity<AppRole>()
             .HasMany(ur => ur.UserRoles)
             .WithOne(u => u.Role)
@@ -46,7 +54,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int,
             .HasOne(s => s.TargetUser)
             .WithMany(l => l.LikedByUsers)
             .HasForeignKey(s => s.TargetUserId)
-            .OnDelete(DeleteBehavior.Cascade); // NoAction with SQL-Server
+            .OnDelete(DeleteBehavior.NoAction); // NoAction with SQL-Server, Cascade with sqlite
         builder.Entity<Message>()
             .HasOne(u => u.Recipient)
             .WithMany(m => m.MessagesReceived)
