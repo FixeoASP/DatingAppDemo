@@ -4,7 +4,7 @@ namespace API.Services;
 
 public class RNGService : IRNGService
 {
-    public async Task<string> GetRandomNumbers(int min, int max, int count)
+    public string GetRandomNumbers(int min, int max, int count)
     {
         if (max < min || count < 1) return null;
         var rand = new Random();

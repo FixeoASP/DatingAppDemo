@@ -12,7 +12,7 @@ namespace API.Data;
 public class UserRepository : IUserRepository
 {
     private readonly DataContext _context;
-    private readonly UserManager<AppUser> _userManager;
+    // private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
 
     public UserRepository(DataContext context, IMapper mapper)
