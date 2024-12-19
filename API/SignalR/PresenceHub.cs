@@ -16,6 +16,7 @@ namespace API.SignalR
 
         public override async Task OnConnectedAsync()
         {
+            if (Context.User == null) throw new HubException("Cannot get current user claim");
             var isOnline = await _tracker.UserConnected(Context.User.GetUsername(), Context.ConnectionId);
             if (isOnline)
                 await Clients.Others.SendAsync("UserIsOnline", Context.User.GetUsername());
@@ -24,8 +25,9 @@ namespace API.SignalR
             await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
         }
 
-        public override async Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception? exception)
         {
+            if (Context.User == null) throw new HubException("Cannot get current user claim");
             var isOffline = await _tracker.UserDisconnected(Context.User.GetUsername(), Context.ConnectionId);
 
             if (isOffline)

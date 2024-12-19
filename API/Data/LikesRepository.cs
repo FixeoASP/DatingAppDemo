@@ -17,7 +17,7 @@ public class LikesRepository : ILikesRepository
         _context = context;
     }
 
-    public async Task<UserLike> GetUserLikeAsync(int sourceUserId, int targetUserId)
+    public async Task<UserLike?> GetUserLikeAsync(int sourceUserId, int targetUserId)
     {
         return await _context.Likes.FindAsync(sourceUserId, targetUserId);
     }
@@ -40,18 +40,18 @@ public class LikesRepository : ILikesRepository
 
         var likedUsers = users.Select(user => new LikeDto
         {
-            UserName = user.UserName,
+            UserName = user.UserName!,
             KnownAs = user.KnownAs,
             Age = user.DateOfBirth.CalculateAge(),
-            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain).Url,
-            City = user.City,
+            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)!.Url,
+            City = user.City!,
             Id = user.Id,
         });
 
         return await PagedList<LikeDto>.CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
     }
 
-    public async Task<AppUser> GetUserWithLikesAsync(int userId)
+    public async Task<AppUser?> GetUserWithLikesAsync(int userId)
     {
         return await _context.Users
             .Include(x => x.LikedUsers)

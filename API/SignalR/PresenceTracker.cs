@@ -59,7 +59,7 @@ namespace API.SignalR
             // Not scalable solution, better with database
             lock (OnlineUsers)
             {
-                connectionIds = OnlineUsers.GetValueOrDefault(username);
+                connectionIds = OnlineUsers.GetValueOrDefault(username)!;
             }
 
             return Task.FromResult(connectionIds);

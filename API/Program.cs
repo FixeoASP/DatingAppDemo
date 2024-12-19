@@ -44,7 +44,7 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    var roleManager = services.GetService<RoleManager<AppRole>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
     await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]");
     await Seed.SeedUsers(userManager, roleManager);
@@ -52,7 +52,7 @@ try
 catch (Exception ex)
 {
     var logger = services.GetService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred during migration");
+    logger?.LogError(ex, "An error occurred during migration");
 }
 
 app.Run();

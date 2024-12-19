@@ -19,7 +19,7 @@ namespace API.Data
             _context = context;
             _mapper = mapper;
         }
-        public async Task<Photo> GetPhotoById(int id)
+        public async Task<Photo?> GetPhotoById(int id)
         {
             return await _context.Photos
                 .IgnoreQueryFilters()
@@ -36,7 +36,7 @@ namespace API.Data
                 .Select(p => new PhotoForApprovalDto
                 {
                     Id = p.Id,
-                    Username = p.AppUser.UserName,
+                    Username = p.AppUser.UserName!,
                     Url = p.Url,
                     IsApproved = p.IsApproved
                 })

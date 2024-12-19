@@ -26,7 +26,7 @@ public class UsersController : BaseApiController
         _photoService = photoService;
     }
 
-    private async Task<AppUser> GetCurrentUserAsync()
+    private async Task<AppUser?> GetCurrentUserAsync()
     {
         return await _uow.UserRepository.GetUserByUsernameAsync(User.GetUsername());
     }
@@ -55,7 +55,7 @@ public class UsersController : BaseApiController
     }
 
     [HttpGet("{username}")] // api/users/lisa
-    public async Task<ActionResult<MemberDto>> GetUser(string username)
+    public async Task<ActionResult<MemberDto?>> GetUser(string username)
     {
         return await _uow.UserRepository.GetMemberAsync(username, User.GetUsername());
     }

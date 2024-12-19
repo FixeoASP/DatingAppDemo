@@ -75,6 +75,8 @@ namespace API.Controllers
 
             var user = await _uow.UserRepository.GetUserByPhotoId(photoId);
 
+            if (user == null) return BadRequest("Could not get user from db");
+
             if (!user.Photos.Any(x => x.IsMain)) photo.IsMain = true;
 
             if (!await _uow.Complete()) return BadRequest("Failed to approve photo");

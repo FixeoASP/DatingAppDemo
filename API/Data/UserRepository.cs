@@ -22,7 +22,7 @@ public class UserRepository : IUserRepository
         _mapper = mapper;
     }
 
-    public async Task<MemberDto> GetMemberAsync(string username, string currentUsername)
+    public async Task<MemberDto?> GetMemberAsync(string username, string currentUsername)
     {
         var query = _context.Users
             .Where(x => x.UserName == username);
@@ -56,7 +56,7 @@ public class UserRepository : IUserRepository
         return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
     }
 
-    public async Task<AppUser> GetUserByPhotoId(int photoId)
+    public async Task<AppUser?> GetUserByPhotoId(int photoId)
     {
         return await _context.Users
             .Include(p => p.Photos)
@@ -65,12 +65,12 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<AppUser> GetUserById(int id)
+    public async Task<AppUser?> GetUserById(int id)
     {
         return await _context.Users.FindAsync(id);
     }
 
-    public async Task<AppUser> GetUserByUsernameAsync(string username)
+    public async Task<AppUser?> GetUserByUsernameAsync(string username)
     {
         // return await _userManager.Users
         //     .Include(x => x.Photos)
@@ -80,7 +80,7 @@ public class UserRepository : IUserRepository
             .SingleOrDefaultAsync(x => x.UserName == username);
     }
 
-    public async Task<string> GetUserGender(string username)
+    public async Task<string?> GetUserGender(string username)
     {
         return await _context.Users
             .Where(x => x.UserName == username)

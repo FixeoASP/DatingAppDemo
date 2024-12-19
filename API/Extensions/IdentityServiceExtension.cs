@@ -22,10 +22,11 @@ public static class IdentityServiceExtension
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                var tokeyKey = config["TokenKey"] ?? throw new Exception("Token key not found");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokeyKey)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
