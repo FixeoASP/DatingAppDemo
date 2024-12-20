@@ -2,11 +2,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Photo } from 'src/app/_models/photo';
 import { AdminService } from 'src/app/_services/admin.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-photo-management-card',
-  templateUrl: './photo-management-card.component.html',
-  styleUrls: ['./photo-management-card.component.css']
+    selector: 'app-photo-management-card',
+    templateUrl: './photo-management-card.component.html',
+    styleUrls: ['./photo-management-card.component.css'],
+    standalone: true,
+    imports: [NgIf]
 })
 export class PhotoManagementCardComponent {
   @Input() photo: Photo | undefined;

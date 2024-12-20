@@ -15,40 +15,40 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [MemberMessagesComponent],
-  imports: [
-    CommonModule,
-    BsDropdownModule.forRoot(),
-    TabsModule.forRoot(),
-    ToastrModule.forRoot({
-      positionClass :'toast-bottom-right'
-    }),
-    NgxSpinnerModule.forRoot({
-      type: 'triangle-skew-spin'
-    }),
-    FileUploadModule,
-    BsDatepickerModule.forRoot(),
-    PaginationModule.forRoot(),
-    ButtonsModule.forRoot(),
-    TimeagoModule.forRoot(),
-    GalleryModule,
-    FormsModule,
-    ModalModule.forRoot()
-  ],
-  exports: [
-    BsDropdownModule,
-    ToastrModule,
-    TabsModule,
-    NgxSpinnerModule,
-    FileUploadModule,
-    BsDatepickerModule,
-    PaginationModule,
-    ButtonsModule,
-    TimeagoModule,
-    GalleryModule,
-    MemberMessagesComponent,
-    FormsModule,
-    ModalModule
-  ]
+    imports: [
+        CommonModule,
+        BsDropdownModule.forRoot(),
+        TabsModule.forRoot(),
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right'
+        }),
+        NgxSpinnerModule.forRoot({
+            type: 'triangle-skew-spin'
+        }),
+        FileUploadModule,
+        BsDatepickerModule.forRoot(),
+        PaginationModule.forRoot(),
+        ButtonsModule.forRoot(),
+        TimeagoModule.forRoot(),
+        GalleryModule,
+        FormsModule,
+        ModalModule.forRoot(),
+        MemberMessagesComponent
+    ],
+    exports: [
+        BsDropdownModule,
+        ToastrModule,
+        TabsModule,
+        NgxSpinnerModule,
+        FileUploadModule,
+        BsDatepickerModule,
+        PaginationModule,
+        ButtonsModule,
+        TimeagoModule,
+        GalleryModule,
+        MemberMessagesComponent,
+        FormsModule,
+        ModalModule
+    ]
 })
 export class SharedModule { }

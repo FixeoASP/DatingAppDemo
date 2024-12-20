@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-test-error',
-  templateUrl: './test-error.component.html',
-  styleUrls: ['./test-error.component.css']
+    selector: 'app-test-error',
+    templateUrl: './test-error.component.html',
+    styleUrls: ['./test-error.component.css'],
+    standalone: true,
+    imports: [NgIf, NgFor]
 })
 export class TestErrorComponent {
   baseUrl = environment.apiUrl;

@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs';
 import { Lotto } from 'src/app/_models/lotto';
 import { NumbersService } from 'src/app/_services/numbers.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-rng',
-  templateUrl: './rng.component.html',
-  styleUrls: ['./rng.component.css']
+    selector: 'app-rng',
+    templateUrl: './rng.component.html',
+    styleUrls: ['./rng.component.css'],
+    standalone: true,
+    imports: [NgIf]
 })
 export class RngComponent {
   jackpotResult: Lotto | null = null;

@@ -4,7 +4,8 @@ import { AccountService } from '../_services/account.service';
 import { take } from 'rxjs';
 
 @Directive({
-  selector: '[appHasRole]'
+    selector: '[appHasRole]',
+    standalone: true
 })
 export class HasRoleDirective implements OnInit{
   @Input() appHasRole: string[] = [];
