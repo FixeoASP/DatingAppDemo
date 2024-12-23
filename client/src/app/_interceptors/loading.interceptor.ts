@@ -1,7 +1,5 @@
 import { inject } from '@angular/core';
-import {
-  HttpInterceptorFn
-} from '@angular/common/http';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { delay, finalize, identity } from 'rxjs';
 import { BusyService } from '../_services/busy.service';
 import { environment } from 'src/environments/environment';
