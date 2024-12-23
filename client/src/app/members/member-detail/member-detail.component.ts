@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs';
@@ -21,20 +21,18 @@ import { MemberMessagesComponent } from '../member-messages/member-messages.comp
   imports: [CommonModule ,TabsModule, GalleryModule, TimeagoModule, DatePipe, MemberMessagesComponent]
 })
 export class MemberDetailComponent implements OnInit, OnDestroy{
+  private accountService = inject(AccountService);
+
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
   member: Member = {} as Member;
   images: GalleryItem[] = [];
   activeTab?: TabDirective;
   messages: Message[] = [];
-  user?: User;
+  user = this.accountService.currentUser();
 
-  constructor(private accountService: AccountService, private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private messageService: MessageService, public presenceService: PresenceService){
-      this.accountService.currentUser$.pipe(take(1)).subscribe({
-        next: user => {
-          if(user) this.user = user;
-        }
-      })
+      
   }
 
   ngOnInit(): void{

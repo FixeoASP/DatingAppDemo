@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_models/user';
 import { environment } from 'src/environments/environment';
@@ -12,8 +12,15 @@ import { PresenceService } from './presence.service';
 export class AccountService {
   static readonly USER_LOCAL_STORAGE_KEY = 'user';
   baseUrl = environment.apiUrl;
-  private currentUserSource = new BehaviorSubject<User | null>(null);
-  currentUser$ = this.currentUserSource.asObservable();
+  currentUser = signal<User | null>(null);
+  currentRoles = computed(() => {
+    const user = this.currentUser();
+    if(user && user.token){
+      const roles = JSON.parse(atob(user.token.split('.')[1])).role;
+      return Array.isArray(roles) ? roles : [roles];
+    }
+    return [];
+  })
 
   constructor(private http: HttpClient, private presenceService: PresenceService) { }
 
@@ -43,13 +50,13 @@ export class AccountService {
     const roles = this.getDecodedToke(user.token).role;
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem(AccountService.USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
-    this.currentUserSource.next(user);
+    this.currentUser.set(user);
     this.presenceService.createHubConnection(user);
   }
 
   logout(){
     localStorage.removeItem(AccountService.USER_LOCAL_STORAGE_KEY);
-    this.currentUserSource.next(null);
+    this.currentUser.set(null);
     this.presenceService.stopHubConnection();
   }
 
