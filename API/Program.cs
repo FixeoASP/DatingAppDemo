@@ -5,10 +5,19 @@ using API.Middleware;
 using API.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Logging.AddAzureWebAppDiagnostics();
+builder.Services.Configure<AzureFileLoggerOptions>(options =>
+{
+    options.FileName = "logs-";
+    options.FileSizeLimit = 50 * 1024;
+    options.RetainedFileCountLimit = 3;
+});
 
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
@@ -40,6 +49,7 @@ app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
+var logger = services.GetService<ILogger<Program>>();
 try
 {
     var context = services.GetRequiredService<DataContext>();
@@ -48,10 +58,10 @@ try
     await context.Database.MigrateAsync();
     await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]");
     await Seed.SeedUsers(userManager, roleManager);
+    logger?.LogInformation("HPHI - Data prep successful!!!");
 }
 catch (Exception ex)
 {
-    var logger = services.GetService<ILogger<Program>>();
     logger?.LogError(ex, "An error occurred during migration");
 }
 

@@ -1,13 +1,10 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
-import { map, of, take } from 'rxjs';
-import { PaginatedResult } from '../_models/paginatedResult';
+import { map, of } from 'rxjs';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
-import { User } from '../_models/user';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
@@ -53,7 +50,7 @@ export class MembersService {
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
-    
+
     // if(this.members.length > 0) return of(this.members);
     return getPaginatedResult<Member[]>(this.baseUrl + 'users', params, this.http).pipe(
       map(response => {
